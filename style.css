@@ -4,7 +4,7 @@
     --text-white: #ffffff;
     --text-gray: #888888;
     --accent-pink: #ff6505; 
-    --font-head: 'Space Grotesk', sans-serif;
+    --font-head: 'Inter', sans-serif;
     --font-mono: 'Roboto Mono', monospace;
     --ease-smooth: cubic-bezier(0.23, 1, 0.32, 1);
 }
@@ -44,7 +44,7 @@ input, textarea { cursor: none; } /* Custom cursor on forms */
 }
 
 .cursor-text {
-    font-size: 10px;
+    font-size: 14px;
     font-weight: 700;
     color: var(--bg-color);
     opacity: 0;
@@ -53,8 +53,8 @@ input, textarea { cursor: none; } /* Custom cursor on forms */
 }
 
 .custom-cursor.active {
-    width: 80px;
-    height: 40px;
+    width: 70px;
+    height: 35px;
     border-radius: 20px;
     background-color: var(--text-white);
 }
@@ -311,8 +311,9 @@ input, textarea { cursor: none; } /* Custom cursor on forms */
 }
 
 .close-btn {
-    background: var(--text-white); color: var(--bg-color); padding: 0.5rem 1.2rem;
-    font-weight: 700; font-family: var(--font-head); border: none;
+    background: var(--text-white); color: var(--bg-color); padding: 0.8rem 1.5rem;
+    font-weight: 700; font-family: var(--font-head); border: 0;
+    text-align: right; text-transform: uppercase;
     clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
 }
 
@@ -368,7 +369,83 @@ input, textarea { cursor: none; } /* Custom cursor on forms */
 .contact-section { text-align: center; }
 .contact-hero h2 { font-family: var(--font-head); font-size: clamp(3rem, 7vw, 6rem); line-height: 0.9; text-transform: uppercase; }
 .outline-text { color: transparent; -webkit-text-stroke: 1px var(--accent-pink); }
-.giant-footer-text { font-family: var(--font-head); font-size: 14vw; line-height: 0.8; font-weight: 700; text-align: center; text-transform: uppercase; background: linear-gradient(to bottom, #fff 0%, #999 40%, #000 50%, #555 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -5px; padding: 2rem 0; border-top: 1px solid #222; }
+.giant-footer-text { font-family: var(--font-head); font-size: 14vw; line-height: 0.8; font-weight: 700; text-align: center; text-transform: uppercase; background: linear-gradient(to bottom, #fff 0%, #e1e1e1 30%, #ff9505 50%, #ff6505 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -5px; padding: 2rem 0; border-top: 1px solid #222; }
+
+/* --- 9. LET'S WORK TOGETHER SECTION --- */
+.contact-section {
+    text-align: center;
+    padding-bottom: auto;
+}
+
+.contact-hero {
+    margin-bottom: 3rem;
+}
+
+.contact-hero h2 {
+    font-family: var(--font-head);
+    font-size: clamp(3rem, 7vw, 6rem);
+    line-height: 0.9;
+    text-transform: uppercase;
+}
+
+.contact-hero .outline-text {
+    color: transparent;
+    -webkit-text-stroke: 1px var(--accent-pink);
+    }
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 300px 1fr;
+    align-items: center;
+    gap: 2rem;
+    margin: 4rem 0;
+}
+
+.contact-side-text {
+    font-size: 0.8rem;
+    color: var(--text-gray);
+    text-transform: uppercase;
+    line-height: 1.6;
+    padding: 0 2rem;
+}
+
+.contact-center-img {
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    border: 1px solid #333;
+    clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+}
+
+.contact-center-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: contrast(1.2) grayscale(100%);
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-bottom: 6rem;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.social-links a {
+    text-decoration: none;
+    color: var(--text-white);
+    position: relative;
+        }
+
+.social-links a::after {
+    content: '↗';
+    font-size: 0.7rem;
+    margin-left: 5px;
+    vertical-align: top;
+}
 
 /* Animations */
 .reveal-text span { display: block; transform: translateY(120%); opacity: 0; transition: transform 1s var(--ease-smooth), opacity 1s var(--ease-smooth); }
@@ -387,5 +464,4 @@ input, textarea { cursor: none; } /* Custom cursor on forms */
     .nav-bottom { grid-template-columns: 1fr; }
     .custom-cursor { display: none; }
     body, a, button, input { cursor: auto; }
-
 }
