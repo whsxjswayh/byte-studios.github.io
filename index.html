@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bytes Studio</title>
+    <title>Byte Studio | Digital Artifacts</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,17 +26,17 @@
             <div class="nav-item hover-target active" onclick="location.href='index.html'">
                 <span class="nav-symbol">+</span><span class="nav-text">HOME</span><span class="nav-num">/01</span>
             </div>
-            <div class="nav-item hover-target" onclick="location.href='about.html'">
+            <!--<div class="nav-item hover-target" onclick="location.href='about.html'">
                 <span class="nav-symbol">+</span><span class="nav-text">ABOUT</span><span class="nav-num">/02</span>
-            </div>
+            </div>-->
             <div class="nav-item hover-target" onclick="location.href='works.html'">
-                <span class="nav-symbol">+</span><span class="nav-text">WORKS</span><span class="nav-num">/03</span>
+                <span class="nav-symbol">+</span><span class="nav-text">WORKS</span><span class="nav-num">/02</span>
             </div>
             <div class="nav-item hover-target" onclick="location.href='meet-the-team.html'">
-                <span class="nav-symbol">+</span><span class="nav-text">MEET THE TEAM</span><span class="nav-num">/04</span>
+                <span class="nav-symbol">+</span><span class="nav-text">MEET THE TEAM</span><span class="nav-num">/03</span>
             </div>
             <div class="nav-item hover-target" onclick="location.href='contact.html'">
-                <span class="nav-symbol">+</span><span class="nav-text">CONTACT</span><span class="nav-num">/05</span>
+                <span class="nav-symbol">+</span><span class="nav-text">CONTACT</span><span class="nav-num">/04</span>
             </div>
         </div>
         <div class="nav-bottom">
@@ -78,8 +78,33 @@
         </h1>
     </header>
 
-    <!-- Partial Works Preview -->
+    <!-- About Bytes Section -->
     <section class="section">
+        
+        <div class="section-header-row">
+        <div>
+            <h2 class="section-title reveal-text scroll-trigger">Crafting Vision</h2>
+            <h2 class="section-title reveal-text scroll-trigger" style="color: var(--accent-pink);">In Every Piece*</h2>
+        </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;">
+            <div class="reveal-text">
+            <h3 style="font-family: var(--font-head); font-size: 2rem;">ABOUT BYTES</h3>
+        </div>
+            <div style="color: var(--text-gray); line-height: 1.8;" class="reveal-text">
+                <p>Byte Studio is a creative team born in the heart of the Olongapo City. Formed by entertainment and multimedia computing students, we are more than just a studio – we are a movement of young minds driven by art, technology, and the pursuit of innovation.</p>
+                <br>
+                <p>What started as a group project has grown into a space where ideas fracture, evolve, and fuse into meaningful creations.</p>
+            </div>
+        </div>
+    </div>
+    </section>
+    <section class="section-divider"></section>
+
+    <!-- Works Preview -->
+    <section class="section">
+        
         <div class="section-header-row">
             <div>
                 <h2 class="section-title reveal-text scroll-trigger">Featured</h2>
@@ -95,8 +120,38 @@
             <div class="work-card scroll-trigger hover-target" onclick="location.href='works.html'"><img src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=2000&auto=format&fit=crop" alt="Work"></div>
             <div class="work-card scroll-trigger hover-target" onclick="location.href='works.html'"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000&auto=format&fit=crop" alt="Work"></div>
         </div>
-
     </section>
+
+    <!-- Services Section -->
+    <section class="section">
+        <div class="section" style="padding-top: 10rem;">
+        <div class="section-header-row">
+            <div>
+                <h2 class="section-title reveal-text">Our</h2>
+                <h2 class="section-title reveal-text" style="color: var(--accent-pink);">Services</h2>
+            </div>
+            <div class="section-desc reveal-text">
+                <span>We don't just design - we create experiences that push limits and drive innovation in every piece.</span>
+            </div>
+        </div>
+
+        <div class="services-list">
+            <div class="service-item scroll-trigger hover-target">
+                <div class="service-info"><span class="service-num">//1</span> Social Media</div>
+                <div class="service-img-wrapper"><img src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=1000&auto=format&fit=crop" alt=""></div>
+            </div>
+            <div class="service-item scroll-trigger hover-target">
+                <div class="service-info"><span class="service-num">//2</span> Motion Design</div>
+                <div class="service-img-wrapper"><img src="https://images.unsplash.com/photo-1563089145-599997674d42?q=80&w=1000&auto=format&fit=crop" alt=""></div>
+            </div>
+            <div class="service-item scroll-trigger hover-target">
+                <div class="service-info"><span class="service-num">//3</span> Web Design</div>
+                <div class="service-img-wrapper"><img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=1000&auto=format&fit=crop" alt=""></div>
+            </div>
+        </div> 
+    </section>
+
+    <!-- Let's Work Section -->
         <section class="section contact-section">
         <div class="contact-hero reveal-text scroll-trigger">
             <h2 class="outline-text">Let's Work</h2>
@@ -124,9 +179,9 @@
         </div>
 
         <div class="social-links">
-            <a href="#">Facebook</a>
-            <a href="#">Instagram</a>
-            <a href="#">Twitter</a>
+            <a href="https://facebook.com" class="hover-target">FACEBOOK </a>
+            <a href="https://instagram.com" class="hover-target">INSTAGRAM </a>
+            <a href="https://x.com" class="hover-target">TWITTER </a>
         </div>
     </section>
 
