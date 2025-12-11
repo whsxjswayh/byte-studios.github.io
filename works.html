@@ -8,13 +8,180 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Work Detail Modal */
+        .work-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(10px);
+            z-index: 10001;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            padding: 2rem;
+        }
+
+        .work-overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .work-detail-container {
+            background: #000;
+            border: 1px solid #333;
+            max-width: 1200px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            clip-path: polygon(30px 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0 30px);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+
+        .work-detail-img {
+            width: 100%;
+            height: 100%;
+            min-height: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .work-detail-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .work-detail-info {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .work-detail-category {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--accent-pink);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .work-detail-title {
+            font-family: var(--font-head);
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+
+        .work-detail-desc {
+            color: var(--text-gray);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .work-meta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #333;
+        }
+
+        .work-meta-item {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+        }
+
+        .work-meta-label {
+            color: #666;
+            text-transform: uppercase;
+            margin-bottom: 0.3rem;
+        }
+
+        .work-meta-value {
+            color: var(--text-white);
+            font-size: 1rem;
+        }
+
+        .loading-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-gray);
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 101, 5, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--accent-pink);
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Filter Tags */
+        .filter-section {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-tag {
+            padding: 0.5rem 1.2rem;
+            background: transparent;
+            border: 1px solid #333;
+            color: var(--text-gray);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+            clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+        }
+
+        .filter-tag:hover, .filter-tag.active {
+            border-color: var(--accent-pink);
+            background: var(--accent-pink);
+            color: #000;
+        }
+
+        @media (max-width: 768px) {
+            .work-detail-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .work-detail-img {
+                min-height: 300px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- ELEMENTS COMMON TO ALL PAGES -->
     <div class="custom-cursor" id="cursor"><span class="cursor-text">OPEN</span></div>
     <div class="noise-wrapper"><div class="noise"></div></div>
 
-    <!-- NAV & ADMIN -->
+    <!-- Navigation -->
     <div class="nav-overlay" id="navOverlay">
         <div class="nav-top">
             <div class="marquee-wrapper"><div class="marquee-content">WE ARE BYTE STUDIO * MOVEMENT OF YOUNG MINDS *</div></div>
@@ -22,7 +189,6 @@
         </div>
         <div class="nav-links-list">
             <div class="nav-item hover-target" onclick="location.href='index.html'"><span class="nav-symbol">+</span><span class="nav-text">HOME</span><span class="nav-num">/01</span></div>
-            <!--<div class="nav-item hover-target" onclick="location.href='about.html'"><span class="nav-symbol">+</span><span class="nav-text">ABOUT</span><span class="nav-num">/02</span></div>-->
             <div class="nav-item hover-target active" onclick="location.href='works.html'"><span class="nav-symbol">+</span><span class="nav-text">WORKS</span><span class="nav-num">/02</span></div>
             <div class="nav-item hover-target" onclick="location.href='meet-the-team.html'"><span class="nav-symbol">+</span><span class="nav-text">MEET THE TEAM</span><span class="nav-num">/03</span></div>
             <div class="nav-item hover-target" onclick="location.href='contact.html'"><span class="nav-symbol">+</span><span class="nav-text">CONTACT</span><span class="nav-num">/04</span></div>
@@ -35,6 +201,7 @@
         </div>
     </div>
     
+    <!-- Admin Login Modal -->
     <div class="admin-overlay" id="adminOverlay">
         <div class="login-box">
             <button class="close-modal hover-target" onclick="toggleAdmin()">×</button>
@@ -44,6 +211,14 @@
                 <div class="input-group"><label class="input-label">Password</label><input type="password" class="brutalist-input hover-target"></div>
                 <button type="submit" class="submit-btn hover-target">Login System</button>
             </form>
+        </div>
+    </div>
+
+    <!-- Work Detail Modal -->
+    <div class="work-overlay" id="workOverlay">
+        <button class="close-modal hover-target" onclick="closeWorkDetail()" style="position: fixed; top: 2rem; right: 2rem; z-index: 10002;">×</button>
+        <div class="work-detail-container" id="workDetailContent">
+            <!-- Content will be loaded dynamically -->
         </div>
     </div>
 
@@ -61,16 +236,23 @@
             </div>
         </div>
 
-        <div class="works-grid">
-            <div class="work-card scroll-trigger hover-target" onclick="location.href='project-template.html'"><img src="https://images.unsplash.com/photo-1635322966219-b75ed3a90533?q=80&w=2000&auto=format&fit=crop" alt="Work"></div>
-            <div class="work-card scroll-trigger hover-target" onclick="location.href='project-template.html'"><img src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=2000&auto=format&fit=crop" alt="Work"></div>
-            <div class="work-card scroll-trigger hover-target" onclick="location.href='project-template.html'"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000&auto=format&fit=crop" alt="Work"></div>
-            <div class="work-card scroll-trigger hover-target" onclick="location.href='project-template.html'"><img src="https://images.unsplash.com/photo-1614729939124-032f0b56c9ce?q=80&w=2000&auto=format&fit=crop" alt="Work"></div>
-            <div class="work-card scroll-trigger hover-target" onclick="location.href='project-template.html'"><img src="https://images.unsplash.com/photo-1592609931095-54a2168ae893?q=80&w=2000&auto=format&fit=crop" alt="Work"></div>
-            <div class="work-card scroll-trigger hover-target" onclick="location.href='project-template.html'"><img src="https://images.unsplash.com/photo-1515630278258-407f66498911?q=80&w=2000&auto=format&fit=crop" alt="Work"></div>
-             <div class="work-card scroll-trigger hover-target" onclick="location.href='project-template.html'"><img src="https://images.unsplash.com/photo-1534665482403-a909d0d97cbb?q=80&w=2000&auto=format&fit=crop" alt="Work"></div>
-            <div class="work-card scroll-trigger hover-target" onclick="location.href='project-template.html'"><img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2000&auto=format&fit=crop" alt="Work"></div>
-            <div class="work-card scroll-trigger hover-target" onclick="location.href='project-template.html'"><img src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=2000&auto=format&fit=crop" alt="Work"></div>
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <button class="filter-tag active" data-filter="all">All</button>
+            <button class="filter-tag" data-filter="branding">Branding</button>
+            <button class="filter-tag" data-filter="web-design">Web Design</button>
+            <button class="filter-tag" data-filter="motion">Motion</button>
+            <button class="filter-tag" data-filter="social-media">Social Media</button>
+            <button class="filter-tag" data-filter="3d">3D Art</button>
+            <button class="filter-tag" data-filter="illustration">Illustration</button>
+        </div>
+
+        <!-- Works Grid (will be populated dynamically) -->
+        <div class="works-grid" id="worksGrid">
+            <div class="loading-state">
+                <div class="loading-spinner"></div>
+                <p>Loading portfolio...</p>
+            </div>
         </div>
     </div>
 
@@ -81,6 +263,33 @@
             <div>Go Back To Top</div>
         </div>
     </footer>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+    
+    <!-- Your Scripts -->
+    <script>
+    console.log('🔥 Testing Firebase...');
+    console.log('Firebase app:', firebase.app().name);
+    console.log('Firestore available:', !!firebase.firestore);
+
+    // Test reading data
+    firebase.firestore().collection('portfolio').get()
+    .then(snapshot => {
+        console.log('✅ Found', snapshot.size, 'works');
+        snapshot.forEach(doc => {
+        console.log('Work:', doc.data());
+        });
+    })
+    .catch(error => {
+        console.error('❌ Error reading:', error);
+    });
+</script>
+    <script src="firebase-auth.js"></script>
+    <script src="works-public.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

@@ -10,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- ELEMENTS COMMON TO ALL PAGES -->
     <div class="custom-cursor" id="cursor"><span class="cursor-text">OPEN</span></div>
     <div class="noise-wrapper"><div class="noise"></div></div>
 
@@ -26,9 +25,6 @@
             <div class="nav-item hover-target active" onclick="location.href='index.html'">
                 <span class="nav-symbol">+</span><span class="nav-text">HOME</span><span class="nav-num">/01</span>
             </div>
-            <!--<div class="nav-item hover-target" onclick="location.href='about.html'">
-                <span class="nav-symbol">+</span><span class="nav-text">ABOUT</span><span class="nav-num">/02</span>
-            </div>-->
             <div class="nav-item hover-target" onclick="location.href='works.html'">
                 <span class="nav-symbol">+</span><span class="nav-text">WORKS</span><span class="nav-num">/02</span>
             </div>
@@ -66,7 +62,6 @@
         </div>
     </div>
 
-    <!-- PAGE CONTENT -->
     <div class="logo-top-left">BYTES STUDIO</div>
     <button class="menu-trigger hover-target" onclick="toggleNav()">MENU</button>
 
@@ -80,31 +75,28 @@
 
     <!-- About Bytes Section -->
     <section class="section">
-        
         <div class="section-header-row">
-        <div>
-            <h2 class="section-title reveal-text scroll-trigger">Crafting Vision</h2>
-            <h2 class="section-title reveal-text scroll-trigger" style="color: var(--accent-pink);">In Every Piece*</h2>
-        </div>
+            <div>
+                <h2 class="section-title reveal-text scroll-trigger">Crafting Vision</h2>
+                <h2 class="section-title reveal-text scroll-trigger" style="color: var(--accent-pink);">In Every Piece*</h2>
+            </div>
         </div>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;">
             <div class="reveal-text">
-            <h3 style="font-family: var(--font-head); font-size: 2rem;">ABOUT BYTES</h3>
-        </div>
+                <h3 style="font-family: var(--font-head); font-size: 2rem;">ABOUT BYTES</h3>
+            </div>
             <div style="color: var(--text-gray); line-height: 1.8;" class="reveal-text">
                 <p>Byte Studio is a creative team born in the heart of the Olongapo City. Formed by entertainment and multimedia computing students, we are more than just a studio – we are a movement of young minds driven by art, technology, and the pursuit of innovation.</p>
                 <br>
                 <p>What started as a group project has grown into a space where ideas fracture, evolve, and fuse into meaningful creations.</p>
             </div>
         </div>
-    </div>
     </section>
     <section class="section-divider"></section>
 
-    <!-- Works Preview -->
+    <!-- Works Preview (DYNAMIC) -->
     <section class="section">
-        
         <div class="section-header-row">
             <div>
                 <h2 class="section-title reveal-text scroll-trigger">Featured</h2>
@@ -115,49 +107,57 @@
             </div>
             <a href="works.html" class="btn-angled hover-target">View Portfolio*</a>
         </div>
-        <div class="works-grid">
-            <div class="work-card scroll-trigger hover-target" onclick="location.href='works.html'"><img src="https://images.unsplash.com/photo-1635322966219-b75ed3a90533?q=80&w=2000&auto=format&fit=crop" alt="Work"></div>
-            <div class="work-card scroll-trigger hover-target" onclick="location.href='works.html'"><img src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=2000&auto=format&fit=crop" alt="Work"></div>
-            <div class="work-card scroll-trigger hover-target" onclick="location.href='works.html'"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000&auto=format&fit=crop" alt="Work"></div>
+        <div class="works-grid" id="featuredWorksGrid">
+            <!-- Will be loaded dynamically from Firebase -->
+            <div class="work-card scroll-trigger hover-target" onclick="location.href='works.html'">
+                <img src="https://images.unsplash.com/photo-1635322966219-b75ed3a90533?q=80&w=2000&auto=format&fit=crop" alt="Work">
+            </div>
+            <div class="work-card scroll-trigger hover-target" onclick="location.href='works.html'">
+                <img src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=2000&auto=format&fit=crop" alt="Work">
+            </div>
+            <div class="work-card scroll-trigger hover-target" onclick="location.href='works.html'">
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000&auto=format&fit=crop" alt="Work">
+            </div>
         </div>
     </section>
 
     <!-- Services Section -->
     <section class="section">
         <div class="section" style="padding-top: 10rem;">
-        <div class="section-header-row">
-            <div>
-                <h2 class="section-title reveal-text">Our</h2>
-                <h2 class="section-title reveal-text" style="color: var(--accent-pink);">Services</h2>
+            <div class="section-header-row">
+                <div>
+                    <h2 class="section-title reveal-text">Our</h2>
+                    <h2 class="section-title reveal-text" style="color: var(--accent-pink);">Services</h2>
+                </div>
+                <div class="section-desc reveal-text">
+                    <span>We don't just design - we create experiences that push limits and drive innovation in every piece.</span>
+                </div>
             </div>
-            <div class="section-desc reveal-text">
-                <span>We don't just design - we create experiences that push limits and drive innovation in every piece.</span>
-            </div>
-        </div>
 
-        <div class="services-list">
-            <div class="service-item scroll-trigger hover-target">
-                <div class="service-info"><span class="service-num">//1</span> Social Media</div>
-                <div class="service-img-wrapper"><img src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=1000&auto=format&fit=crop" alt=""></div>
-            </div>
-            <div class="service-item scroll-trigger hover-target">
-                <div class="service-info"><span class="service-num">//2</span> Motion Design</div>
-                <div class="service-img-wrapper"><img src="https://images.unsplash.com/photo-1563089145-599997674d42?q=80&w=1000&auto=format&fit=crop" alt=""></div>
-            </div>
-            <div class="service-item scroll-trigger hover-target">
-                <div class="service-info"><span class="service-num">//3</span> Web Design</div>
-                <div class="service-img-wrapper"><img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=1000&auto=format&fit=crop" alt=""></div>
-            </div>
-        </div> 
+            <div class="services-list">
+                <div class="service-item scroll-trigger hover-target">
+                    <div class="service-info"><span class="service-num">//1</span> Social Media</div>
+                    <div class="service-img-wrapper"><img src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=1000&auto=format&fit=crop" alt=""></div>
+                </div>
+                <div class="service-item scroll-trigger hover-target">
+                    <div class="service-info"><span class="service-num">//2</span> Motion Design</div>
+                    <div class="service-img-wrapper"><img src="https://images.unsplash.com/photo-1563089145-599997674d42?q=80&w=1000&auto=format&fit=crop" alt=""></div>
+                </div>
+                <div class="service-item scroll-trigger hover-target">
+                    <div class="service-info"><span class="service-num">//3</span> Web Design</div>
+                    <div class="service-img-wrapper"><img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=1000&auto=format&fit=crop" alt=""></div>
+                </div>
+            </div> 
+        </div>
     </section>
 
     <!-- Let's Work Section -->
-        <section class="section contact-section">
+    <section class="section contact-section">
         <div class="contact-hero reveal-text scroll-trigger">
             <h2 class="outline-text">Let's Work</h2>
             <h2>Together</h2>
             <br>
-            <a href="#" class="btn-angled" style="background: var(--text-white); color: #000;">Contact Now*</a>
+            <a href="contact.html" class="btn-angled" style="background: var(--text-white); color: #000;">Contact Now*</a>
         </div>
 
         <div class="contact-grid">
@@ -193,6 +193,54 @@
         </div>
     </footer>
 
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+    
+    <!-- Your Scripts -->
+    <script src="firebase-auth.js"></script>
+    <script>
+        // Load featured works on homepage
+        if (typeof firebase !== 'undefined' && firebase.firestore) {
+            const db = firebase.firestore();
+            const grid = document.getElementById('featuredWorksGrid');
+            
+            // Load latest 3 works
+            db.collection('portfolio')
+                .orderBy('uploadedAt', 'desc')
+                .limit(3)
+                .get()
+                .then((snapshot) => {
+                    if (!snapshot.empty) {
+                        grid.innerHTML = '';
+                        snapshot.forEach((doc) => {
+                            const data = doc.data();
+                            const card = document.createElement('div');
+                            card.className = 'work-card scroll-trigger hover-target';
+                            card.onclick = () => location.href = 'works.html';
+                            
+                            const img = document.createElement('img');
+                            img.src = data.imageUrl;
+                            img.alt = data.title;
+                            img.loading = 'lazy';
+                            
+                            card.appendChild(img);
+                            grid.appendChild(card);
+                        });
+                        
+                        // Re-observe for animations
+                        if (typeof observer !== 'undefined') {
+                            document.querySelectorAll('.work-card').forEach(el => observer.observe(el));
+                        }
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error loading featured works:', error);
+                });
+        }
+    </script>
     <script src="script.js"></script>
 </body>
 </html>

@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Byte Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-color: #000000;
+            --text-white: #ffffff;
+            --text-gray: #888888;
+            --accent-pink: #ff6505;
+            --font-head: 'Space Grotesk', sans-serif;
+            --font-mono: 'Roboto Mono', monospace;
+            --ease-smooth: cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        body {
+            background: var(--bg-color);
+            color: var(--text-white);
+            font-family: var(--font-mono);
+        }
+
+        .admin-container {
+            padding: 3rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 6rem;
+        }
+
+        .dashboard-header {
+            border-bottom: 2px solid var(--accent-pink);
+            padding-bottom: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .dashboard-title {
+            font-family: var(--font-head);
+            font-size: clamp(2rem, 5vw, 4rem);
+            text-transform: uppercase;
+            color: var(--accent-pink);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            padding: 2rem;
+            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+        }
+
+        .stat-value {
+            font-family: var(--font-head);
+            font-size: 2.5rem;
+            color: var(--accent-pink);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            text-transform: uppercase;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-tab {
+            padding: 0.8rem 1.5rem;
+            background: transparent;
+            border: 1px solid #333;
+            color: var(--text-gray);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+            clip-path: polygon(5px 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px);
+        }
+
+        .nav-tab:hover, .nav-tab.active {
+            border-color: var(--accent-pink);
+            background: var(--accent-pink);
+            color: #000;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Upload Form */
+        .upload-section {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+        }
+
+        .upload-area {
+            border: 2px dashed var(--accent-pink);
+            padding: 3rem;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+            background: rgba(255, 101, 5, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .upload-area:hover {
+            background: rgba(255, 101, 5, 0.1);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-label {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .form-input, .form-textarea, .form-select {
+            background: #000;
+            border: 1px solid #333;
+            color: var(--text-white);
+            padding: 0.8rem;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+        }
+
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--accent-pink);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Filter Buttons */
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: 1px solid #333;
+            color: var(--text-gray);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            border-color: var(--accent-pink);
+            background: var(--accent-pink);
+            color: #000;
+        }
+
+        /* Portfolio Grid */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .portfolio-item {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            overflow: hidden;
+            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+            transition: 0.3s;
+        }
+
+        .portfolio-item:hover {
+            border-color: var(--accent-pink);
+            transform: translateY(-5px);
+        }
+
+        .portfolio-item-img {
+            width: 100%;
+            aspect-ratio: 4/3;
+            overflow: hidden;
+            background: #111;
+        }
+
+        .portfolio-item-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s;
+            filter: grayscale(100%);
+        }
+
+        .portfolio-item:hover .portfolio-item-img img {
+            transform: scale(1.05);
+            filter: grayscale(0%);
+        }
+
+        .portfolio-item-info {
+            padding: 1.5rem;
+        }
+
+        .portfolio-item-title {
+            font-family: var(--font-head);
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            margin-bottom: 0.3rem;
+        }
+
+        .portfolio-item-category {
+            font-size: 0.75rem;
+            color: var(--accent-pink);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .portfolio-item-desc {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .portfolio-item-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Messages */
+        .messages-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .message-card {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: 0.3s;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+        }
+
+        .message-card:hover {
+            border-color: var(--accent-pink);
+        }
+
+        .message-card.unread {
+            border-left: 3px solid var(--accent-pink);
+        }
+
+        .message-card-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .message-sender {
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }
+
+        .message-email {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        .message-preview {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            line-height: 1.4;
+            margin-bottom: 0.5rem;
+        }
+
+        .message-status {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .status-badge {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            background: #111;
+            border: 1px solid #333;
+            text-transform: uppercase;
+        }
+
+        .status-badge.unread {
+            background: var(--accent-pink);
+            color: #000;
+            border-color: var(--accent-pink);
+        }
+
+        /* Message Detail Overlay */
+        .message-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0,0,0,0.95);
+            z-index: 10001;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+            padding: 2rem;
+        }
+
+        .message-overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .message-detail-box {
+            background: #000;
+            border: 1px solid #333;
+            padding: 3rem;
+            max-width: 700px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .close-modal:hover {
+            color: var(--accent-pink);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+            clip-path: polygon(5px 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px);
+        }
+
+        .btn-primary {
+            background: var(--accent-pink);
+            color: #000;
+            font-weight: 700;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid #333;
+            color: var(--text-white);
+        }
+
+        .btn-danger {
+            background: #ff3333;
+            color: white;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 0.5rem;
+            background: transparent;
+            border: 1px solid #333;
+            color: var(--text-white);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .action-btn:hover {
+            background: var(--accent-pink);
+            border-color: var(--accent-pink);
+            color: #000;
+        }
+
+        .action-btn.delete:hover {
+            background: #ff0000;
+            border-color: #ff0000;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-gray);
+            grid-column: 1 / -1;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 101, 5, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--accent-pink);
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #111;
+            border: 1px solid #333;
+            overflow: hidden;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent-pink);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #000;
+            transition: width 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="dashboard-header">
+            <h1 class="dashboard-title">Admin Dashboard</h1>
+            <p style="color: #888; font-size: 0.9rem;">Manage your portfolio, team, and messages</p>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="totalWorks">0</div>
+                <div class="stat-label">Total Works</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalViews">0</div>
+                <div class="stat-label">Total Views</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="messageCount">0</div>
+                <div class="stat-label">Messages</div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" data-tab="portfolio">Portfolio</button>
+            <button class="nav-tab" data-tab="team">Team Management</button>
+            <button class="nav-tab" data-tab="messages">Messages</button>
+        </div>
+
+        <!-- Portfolio Tab -->
+        <div id="portfolio-tab" class="tab-content active">
+            <h2 style="font-family: var(--font-head); font-size: 1.5rem; margin-bottom: 2rem;">Portfolio Management</h2>
+            
+            <!-- Upload Form -->
+            <div class="upload-section">
+                <h3 style="font-family: var(--font-head); font-size: 1.2rem; margin-bottom: 1.5rem; text-transform: uppercase;">Upload New Project</h3>
+                <form id="uploadForm">
+                    <div class="upload-area" id="uploadArea">
+                        <div style="font-size: 3rem; margin-bottom: 0.5rem;">📸</div>
+                        <p style="font-size: 1.1rem; margin-bottom: 0.5rem;">Drag & drop or click to upload</p>
+                        <p style="font-size: 0.8rem; color: #666;">JPG, PNG, GIF (Max 10MB)</p>
+                        <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                    </div>
+                    <div id="fileInfo" style="display: none; margin-bottom: 1rem; color: var(--accent-pink); font-size: 0.9rem;"></div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Project Title *</label>
+                            <input type="text" class="form-input" id="projectTitle" placeholder="Enter project title" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Category *</label>
+                            <select class="form-select" id="projectCategory" required>
+                                <option value="">Select category</option>
+                                <option value="branding">Branding</option>
+                                <option value="web-design">Web Design</option>
+                                <option value="motion">Motion</option>
+                                <option value="social-media">Social Media</option>
+                                <option value="3d">3D Art</option>
+                                <option value="illustration">Illustration</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 1.5rem;">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-textarea" id="projectDescription" placeholder="Describe your project..."></textarea>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Client</label>
+                            <input type="text" class="form-input" id="projectClient" placeholder="Client name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Artist</label>
+                            <input type="text" class="form-input" id="projectArtist" placeholder="Artist name">
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Year *</label>
+                            <input type="number" class="form-input" id="projectYear" value="2025" min="2000" max="2100" required>
+                        </div>
+                        <div class="form-group"></div>
+                    </div>
+
+                    <div class="progress-bar" id="progressBar">
+                        <div class="progress-fill" id="progressFill" style="width: 0%;">0%</div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="margin-top: 1.5rem;">Upload Project*</button>
+                </form>
+            </div>
+
+            <!-- Filter -->
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="branding">Branding</button>
+                <button class="filter-btn" data-filter="web-design">Web Design</button>
+                <button class="filter-btn" data-filter="motion">Motion</button>
+                <button class="filter-btn" data-filter="social-media">Social Media</button>
+                <button class="filter-btn" data-filter="3d">3D Art</button>
+                <button class="filter-btn" data-filter="illustration">Illustration</button>
+            </div>
+
+            <!-- Portfolio Grid -->
+            <div class="portfolio-grid" id="portfolioGrid">
+                <div class="empty-state">
+                    <div class="loading"></div>
+                    <p>Loading portfolio...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Tab -->
+        <div id="team-tab" class="tab-content">
+            <h2 style="font-family: var(--font-head); font-size: 1.5rem; margin-bottom: 2rem;">Team Management</h2>
+            <p style="color: #888; margin-bottom: 2rem;">Go to <a href="team-management.html" style="color: var(--accent-pink);">Team Management Page</a> to add/edit team members</p>
+        </div>
+
+        <!-- Messages Tab -->
+        <div id="messages-tab" class="tab-content">
+            <h2 style="font-family: var(--font-head); font-size: 1.5rem; margin-bottom: 2rem;">Messages</h2>
+            
+            <!-- Filter -->
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-msg-filter="all">All</button>
+                <button class="filter-btn" data-msg-filter="unread">Unread</button>
+                <button class="filter-btn" data-msg-filter="read">Read</button>
+            </div>
+
+            <!-- Messages Grid -->
+            <div class="messages-grid" id="messagesGrid">
+                <div class="empty-state">
+                    <div class="loading"></div>
+                    <p>Loading messages...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Message Detail Overlay -->
+    <div class="message-overlay" id="messageOverlay">
+        <div class="message-detail-box">
+            <button class="close-modal" onclick="closeMessageDetail()">×</button>
+            <h3 style="font-family: var(--font-head); font-size: 1.8rem; margin-bottom: 1rem; color: var(--accent-pink);">Message Details</h3>
+            
+            <div style="margin-bottom: 2rem;">
+                <div style="margin-bottom: 1rem;">
+                    <div style="font-size: 0.8rem; color: #666; margin-bottom: 0.3rem;">FROM</div>
+                    <div style="font-size: 1.1rem; font-weight: 700;" id="msgDetailName"></div>
+                    <div style="font-size: 0.9rem; color: var(--text-gray);" id="msgDetailEmail"></div>
+                </div>
+                <div>
+                    <div style="font-size: 0.8rem; color: #666; margin-bottom: 0.3rem;">RECEIVED</div>
+                    <div style="font-size: 0.9rem;" id="msgDetailTime"></div>
+                </div>
+            </div>
+
+            <div style="border-top: 1px solid #333; padding-top: 2rem; margin-bottom: 2rem;">
+                <div style="font-size: 0.8rem; color: #666; margin-bottom: 0.5rem;">MESSAGE</div>
+                <div style="line-height: 1.6; color: var(--text-gray);" id="msgDetailBody"></div>
+            </div>
+
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <button class="btn btn-primary" onclick="replyToMessage()">Reply</button>
+                <button class="btn btn-secondary" id="markReadBtn" onclick="toggleReadStatus()">Mark as Read</button>
+                <button class="btn btn-danger" onclick="deleteMessage()">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+    <script src="firebase-auth.js"></script>
+    <script src="admin-dashboard.js"></script>
+    <script src="admin-messages.js"></script>
+    
+    <script>
+        // Tab Switching Functionality
+        document.querySelectorAll('.nav-tab').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tabName = this.getAttribute('data-tab');
+                
+                // Remove active from all tabs and content
+                document.querySelectorAll('.tab-content').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                document.querySelectorAll('.nav-tab').forEach(b => {
+                    b.classList.remove('active');
+                });
+                
+                // Add active to clicked tab and corresponding content
+                document.getElementById(tabName + '-tab').classList.add('active');
+                this.classList.add('active');
+                
+                // Load content when tab is activated
+                if (tabName === 'portfolio') {
+                    loadPortfolioItems();
+                    loadStats();
+                }
+                if (tabName === 'messages') {
+                    loadMessages();
+                }
+            });
+        });
+
+        // Initialize on load
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                loadPortfolioItems();
+                loadStats();
+            }
+        });
+    </script>
+</body>
+</html>

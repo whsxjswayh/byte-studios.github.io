@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Management | Byte Studio Admin</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        .team-management {
+            padding-top: 8rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+
+        .page-header {
+            border-bottom: 2px solid var(--accent-pink);
+            padding-bottom: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .page-title {
+            font-family: var(--font-head);
+            font-size: clamp(2rem, 5vw, 4rem);
+            text-transform: uppercase;
+            color: var(--accent-pink);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-family: var(--font-mono);
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        .add-member-section {
+            background: #0a0a0a;
+            border: 2px dashed #333;
+            padding: 3rem;
+            margin-bottom: 4rem;
+            clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .form-grid.full {
+            grid-template-columns: 1fr;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--accent-pink);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            background: #000;
+            border: 1px solid #333;
+            padding: 0.8rem;
+            color: var(--text-white);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent-pink);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .image-upload-area {
+            border: 2px dashed var(--accent-pink);
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+            background: rgba(255, 101, 5, 0.05);
+        }
+
+        .image-upload-area:hover {
+            background: rgba(255, 101, 5, 0.1);
+            border-color: var(--text-white);
+        }
+
+        .image-upload-area.dragging {
+            background: rgba(255, 101, 5, 0.15);
+            border-color: var(--text-white);
+        }
+
+        .image-preview {
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .image-preview img {
+            max-width: 150px;
+            max-height: 150px;
+            border: 1px solid #333;
+            padding: 0.5rem;
+        }
+
+        .team-members-section {
+            margin-bottom: 4rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #333;
+        }
+
+        .section-header h3 {
+            font-family: var(--font-head);
+            font-size: 2rem;
+            text-transform: uppercase;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .team-card {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            overflow: hidden;
+            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+            transition: all 0.3s;
+        }
+
+        .team-card:hover {
+            border-color: var(--accent-pink);
+            transform: translateY(-5px);
+        }
+
+        .team-card-img {
+            width: 100%;
+            aspect-ratio: 1/1;
+            overflow: hidden;
+            background: #111;
+        }
+
+        .team-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            filter: grayscale(100%);
+        }
+
+        .team-card:hover .team-card-img img {
+            transform: scale(1.05);
+            filter: grayscale(0%);
+        }
+
+        .team-card-content {
+            padding: 1.5rem;
+        }
+
+        .team-card-name {
+            font-family: var(--font-head);
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            margin-bottom: 0.3rem;
+        }
+
+        .team-card-role {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent-pink);
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+        }
+
+        .team-card-bio {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            line-height: 1.4;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .team-card-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 0.5rem;
+            background: transparent;
+            border: 1px solid #333;
+            color: var(--text-white);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .action-btn:hover {
+            background: var(--accent-pink);
+            border-color: var(--accent-pink);
+            color: #000;
+        }
+
+        .action-btn.delete:hover {
+            background: #ff0000;
+            border-color: #ff0000;
+            color: #fff;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-gray);
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 101, 5, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--accent-pink);
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="custom-cursor" id="cursor"><span class="cursor-text">CLICK</span></div>
+    <div class="noise-wrapper"><div class="noise"></div></div>
+
+    <!-- Navigation -->
+    <div class="nav-overlay" id="navOverlay">
+        <div class="nav-top">
+            <div class="marquee-wrapper"><div class="marquee-content">TEAM MANAGEMENT * ADMIN PANEL * TEAM MANAGEMENT *</div></div>
+            <button class="close-btn hover-target" onclick="toggleNav()">CLOSE</button>
+        </div>
+        <div class="nav-links-list">
+            <div class="nav-item hover-target" onclick="location.href='index.html'"><span class="nav-symbol">+</span><span class="nav-text">HOME</span><span class="nav-num">/01</span></div>
+            <div class="nav-item hover-target" onclick="location.href='admin-dashboard.html'"><span class="nav-symbol">+</span><span class="nav-text">DASHBOARD</span><span class="nav-num">/02</span></div>
+            <div class="nav-item hover-target active"><span class="nav-symbol">+</span><span class="nav-text">TEAM MGMT</span><span class="nav-num">/03</span></div>
+        </div>
+        <div class="nav-bottom">
+            <a href="https://bytestudio.com" class="hover-target">FACEBOOK ↗</a>
+            <a href="https://bytestudio.com" class="hover-target">INSTAGRAM ↗</a>
+        </div>
+    </div>
+
+    <div class="logo-top-left">BYTE STUDIO</div>
+    <button class="menu-trigger hover-target" onclick="toggleNav()">MENU</button>
+
+    <!-- Team Management Content -->
+    <div class="team-management admin-only">
+        
+        <!-- Header -->
+        <div class="page-header">
+            <h1 class="page-title">Team Management</h1>
+            <p class="page-subtitle">Add and manage team members</p>
+        </div>
+
+        <!-- Add Team Member Form -->
+        <div class="add-member-section">
+            <h2 style="font-family: var(--font-head); font-size: 1.8rem; margin-bottom: 2rem; text-transform: uppercase;">Add New Team Member</h2>
+            
+            <form id="addTeamForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Full Name *</label>
+                        <input type="text" class="form-input" id="teamName" placeholder="e.g., Alex Johnson" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Role/Position *</label>
+                        <input type="text" class="form-input" id="teamRole" placeholder="e.g., Creative Director" required>
+                    </div>
+                </div>
+
+                <div class="form-grid full">
+                    <div class="form-group">
+                        <label class="form-label">Bio/Description *</label>
+                        <textarea class="form-textarea" id="teamBio" placeholder="Tell us about this team member..." required></textarea>
+                    </div>
+                </div>
+
+                <div class="form-grid full">
+                    <div class="form-group">
+                        <label class="form-label">Profile Image *</label>
+                        <div class="image-upload-area" id="imageUploadArea">
+                            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">📸</div>
+                            <p style="font-size: 0.9rem; color: var(--text-gray);">Drag & drop or click to upload</p>
+                            <p style="font-size: 0.75rem; color: #666; margin-top: 0.5rem;">JPG, PNG, GIF (Max 5MB)</p>
+                            <input type="file" id="teamImageInput" accept="image/*" style="display: none;">
+                        </div>
+                        <div class="image-preview" id="imagePreview"></div>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Skills/Expertise (optional)</label>
+                        <input type="text" class="form-input" id="teamSkills" placeholder="e.g., Design, Animation, Web">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Social Link (optional)</label>
+                        <input type="url" class="form-input" id="teamLink" placeholder="e.g., https://portfolio.com">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-angled hover-target" style="margin-top: 1.5rem; width: 100%;">
+                    Add Team Member*
+                </button>
+            </form>
+        </div>
+
+        <!-- Team Members List -->
+        <div class="team-members-section">
+            <div class="section-header">
+                <h3>Current Team Members</h3>
+            </div>
+
+            <div class="team-grid" id="teamGrid">
+                <div class="empty-state">
+                    <div class="loading-spinner"></div>
+                    <p>Loading team members...</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Not Logged In Message -->
+    <div class="section" id="notLoggedIn" style="padding-top: 15rem; text-align: center; display: none;">
+        <h2 style="font-family: var(--font-head); font-size: 3rem; margin-bottom: 1rem;">🔒</h2>
+        <h2 style="font-family: var(--font-head); font-size: 2rem; margin-bottom: 1rem;">Access Denied</h2>
+        <p style="color: var(--text-gray); margin-bottom: 2rem;">You need to be logged in as an admin to access this page.</p>
+        <a href="index.html" class="btn-angled hover-target">Go Back Home*</a>
+    </div>
+
+    <footer>
+        <div class="giant-footer-text">BYTE STUDIO</div>
+        <div style="display:flex; justify-content:space-between; padding:2rem; font-size:0.8rem; color:#888;">
+            <div>&copy; 2025 Byte Studio</div>
+            <div>Team Management</div>
+        </div>
+    </footer>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <script src="firebase-auth.js"></script>
+    <script>
+        // Check authentication
+        firebase.auth().onAuthStateChanged((user) => {
+            if (!user) {
+                document.querySelector('.team-management').style.display = 'none';
+                document.getElementById('notLoggedIn').style.display = 'block';
+            } else {
+                document.querySelector('.team-management').style.display = 'block';
+                document.getElementById('notLoggedIn').style.display = 'none';
+                loadTeamMembers();
+            }
+        });
+
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+        let selectedImage = null;
+
+        // Image upload handling
+        const imageUploadArea = document.getElementById('imageUploadArea');
+        const teamImageInput = document.getElementById('teamImageInput');
+        const imagePreview = document.getElementById('imagePreview');
+
+        imageUploadArea.addEventListener('click', () => teamImageInput.click());
+
+        imageUploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            imageUploadArea.classList.add('dragging');
+        });
+
+        imageUploadArea.addEventListener('dragleave', () => {
+            imageUploadArea.classList.remove('dragging');
+        });
+
+        imageUploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            imageUploadArea.classList.remove('dragging');
+            handleImageSelect(e.dataTransfer.files[0]);
+        });
+
+        teamImageInput.addEventListener('change', (e) => {
+            handleImageSelect(e.target.files[0]);
+        });
+
+        function handleImageSelect(file) {
+            if (!file) return;
+
+            const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+            if (!validTypes.includes(file.type)) {
+                alert('Please select a valid image file');
+                return;
+            }
+
+            if (file.size > 5 * 1024 * 1024) {
+                alert('Image must be less than 5MB');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                imagePreview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+                selectedImage = file;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Add team member
+        document.getElementById('addTeamForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('teamName').value.trim();
+            const role = document.getElementById('teamRole').value.trim();
+            const bio = document.getElementById('teamBio').value.trim();
+            const skills = document.getElementById('teamSkills').value.trim();
+            const link = document.getElementById('teamLink').value.trim();
+
+            if (!name || !role || !bio || !selectedImage) {
+                alert('Please fill in all required fields and select an image');
+                return;
+            }
+
+            const submitBtn = document.querySelector('#addTeamForm button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Uploading...';
+
+            try {
+                const filename = `team/${Date.now()}_${selectedImage.name}`;
+                const storageRef = storage.ref(filename);
+                const uploadTask = await storageRef.put(selectedImage);
+                const imageUrl = await uploadTask.ref.getDownloadURL();
+
+                await db.collection('team').add({
+                    name: name,
+                    role: role,
+                    bio: bio,
+                    skills: skills || '',
+                    link: link || '',
+                    imageUrl: imageUrl,
+                    storagePath: filename,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                alert('Team member added successfully!');
+                document.getElementById('addTeamForm').reset();
+                imagePreview.innerHTML = '';
+                selectedImage = null;
+                loadTeamMembers();
+
+            } catch (error) {
+                console.error('Error adding team member:', error);
+                alert('Error: ' + error.message);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Add Team Member*';
+            }
+        });
+
+        // Load team members
+        async function loadTeamMembers() {
+            const grid = document.getElementById('teamGrid');
+
+            try {
+                const snapshot = await db.collection('team').orderBy('createdAt', 'desc').get();
+
+                if (snapshot.empty) {
+                    grid.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">👥</div>
+                            <p>No team members yet. Add your first member!</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                grid.innerHTML = '';
+
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const card = document.createElement('div');
+                    card.className = 'team-card';
+
+                    card.innerHTML = `
+                        <div class="team-card-img">
+                            <img src="${data.imageUrl}" alt="${data.name}">
+                        </div>
+                        <div class="team-card-content">
+                            <div class="team-card-name">${data.name}</div>
+                            <div class="team-card-role">${data.role}</div>
+                            <div class="team-card-bio">${data.bio}</div>
+                            <div class="team-card-actions">
+                                <button class="action-btn delete" onclick="deleteTeamMember('${doc.id}', '${data.storagePath}')">Delete</button>
+                            </div>
+                        </div>
+                    `;
+
+                    grid.appendChild(card);
+                });
+
+            } catch (error) {
+                console.error('Error loading team:', error);
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">⚠️</div>
+                        <p>Error loading team members</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Delete team member
+        async function deleteTeamMember(memberId, storagePath) {
+            if (!confirm('Are you sure you want to delete this team member?')) return;
+
+            try {
+                try {
+                    await storage.ref(storagePath).delete();
+                } catch (e) {
+                    console.log('Could not delete image');
+                }
+
+                await db.collection('team').doc(memberId).delete();
+                alert('Team member deleted successfully!');
+                loadTeamMembers();
+
+            } catch (error) {
+                console.error('Error deleting member:', error);
+                alert('Error: ' + error.message);
+            }
+        }
+    </script>
+    <script src="script.js"></script>
+    
+</body>
+</html>
