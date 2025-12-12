@@ -9,10 +9,10 @@
 
 ## 🔭 **Project Overview**
 
-🎯 **Project Goals & Objective**
-The primary goal of Byte Studio is to bridge the gap between creative expression and technical implementation. We aim to demonstrate how modern web systems communicate effectively between a frontend interface, a backend logic layer, and a cloud-based database.
+### 🎯 **Project Goals & Objective**:
+#### The primary goal of Byte Studio is to bridge the gap between creative expression and technical implementation. We aim to demonstrate how modern web systems communicate effectively between a frontend interface, a backend logic layer, and a cloud-based database.
 
-👥 **Target Audience**:
+### 👥 **Target Audience**:
 - **Studio Members**: To manage and display their personal portfolios.
 - **Creatives**: Looking for inspiration or a platform layout to emulate.
 - **Potential Clients**: Viewing the gallery to scout talent.
