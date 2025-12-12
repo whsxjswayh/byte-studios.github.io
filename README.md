@@ -1,5 +1,5 @@
-# 🎨 **Byte Studio** - Art Portfolio Database System
-### The Byte Studio is a web-based portfolio designed to showcase our creative artworks from students and artists. It features a secured admin panel where the team can manage, upload, and organize the creative artworks/works. And it allows users to view and explore the entire portfolio.
+## 🎨 **Byte Studio** - Art Portfolio Database System
+#### The Byte Studio is a web-based portfolio designed to showcase our creative artworks from students and artists. It features a secured admin panel where the team can manage, upload, and organize the creative artworks/works. And it allows users to view and explore the entire portfolio.
 
 ## 📖 **Table of Contents**
 - **[Project Overview](https://github.com/whsxjswayh/byte-studios.github.io/blob/Jam006-patch-1/README.md#-project-overview)**
@@ -9,10 +9,10 @@
 
 ## 🔭 **Project Overview**
 
-🎯 **Project Goals & Objective**
-The primary goal of Byte Studio is to bridge the gap between creative expression and technical implementation. We aim to demonstrate how modern web systems communicate effectively between a frontend interface, a backend logic layer, and a cloud-based database.
+### 🎯 **Project Goals & Objective**:
+#### The primary goal of Byte Studio is to bridge the gap between creative expression and technical implementation. We aim to demonstrate how modern web systems communicate effectively between a frontend interface, a backend logic layer, and a cloud-based database.
 
-👥 **Target Audience**:
+### 👥 **Target Audience**:
 - **Studio Members**: To manage and display their personal portfolios.
 - **Creatives**: Looking for inspiration or a platform layout to emulate.
 - **Potential Clients**: Viewing the gallery to scout talent.
