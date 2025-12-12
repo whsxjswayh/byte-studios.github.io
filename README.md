@@ -2,7 +2,7 @@
 The Byte Studio is a web-based portfolio designed to showcase our creative artworks from students and artists. It features a secured admin panel where the team can manage, upload, and organize the creative artworks/works. And it allows users to view and explore the entire portfolio.
 
 ## 📖 **Table of Contents**
-- Project Overview[## 🔭 **Project Overview**]
+- Project Overview[[## 🔭 **Project Overview**](https://github.com/whsxjswayh/byte-studios.github.io/blob/Jam006-patch-1/README.md#-team--contributions)]
 - Key Features
 - Technology Stack
 - Installation & Setup
