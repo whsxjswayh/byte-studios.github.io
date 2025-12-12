@@ -2,10 +2,10 @@
 #### The Byte Studio is a web-based portfolio designed to showcase our creative artworks from students and artists. It features a secured admin panel where the team can manage, upload, and organize the creative artworks/works. And it allows users to view and explore the entire portfolio.
 
 ## 📖 **Table of Contents**
-- **[Project Overview](https://github.com/whsxjswayh/byte-studios.github.io/blob/Jam006-patch-1/README.md#-project-overview)**
-- **[Technology Stack](https://github.com/whsxjswayh/byte-studios.github.io/blob/Jam006-patch-1/README.md#-technology-stack)**
-- **[Team & Contributions](https://github.com/whsxjswayh/byte-studios.github.io/blob/Jam006-patch-1/README.md#-team--contributions)**
-- **[System Features](https://github.com/whsxjswayh/byte-studios.github.io/blob/Jam006-patch-1/README.md#-system-features)**
+- **[Project Overview](https://github.com/whsxjswayh/byte-studios.github.io/tree/Jam006-patch-1?tab=readme-ov-file#-project-overview)**
+- **[Technology Stack](https://github.com/whsxjswayh/byte-studios.github.io/tree/Jam006-patch-1/README.md#-technology-stack)**
+- **[Team & Contributions](https://github.com/whsxjswayh/byte-studios.github.io/tree/Jam006-patch-1/README.md#-team--contributions)**
+- **[System Features](https://github.com/whsxjswayh/byte-studios.github.io/tree/Jam006-patch-1/README.md#-system-features)**
 
 ## 🔭 **Project Overview**
 
